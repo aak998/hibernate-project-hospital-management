@@ -1,0 +1,167 @@
+package hospitalmanagement;
+
+import java.util.ArrayList;
+import java.util.List;
+
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
+import javax.persistence.Persistence;
+
+public class hospital1driver {
+
+	public static void main(String[] args) {
+		
+		// TODO Auto-generated method stub
+		EntityManagerFactory entityManagerFactory=Persistence.createEntityManagerFactory("Oneak");
+		EntityManager em=entityManagerFactory.createEntityManager();
+		EntityTransaction et=em.getTransaction();
+		
+		Hospital hospital=new Hospital();
+		hospital.setId(1);
+		hospital.setHname("krishna");
+		hospital.setCeo("akshay");
+	
+		Branches branch1=new Branches();
+		branch1.setId(11);
+		branch1.setBname("pune");
+		branch1.setManager("akash");
+		
+		Branches branch2=new Branches();
+		branch2.setId(12);
+		branch2.setBname("karad");
+		branch2.setManager("ajay");
+		
+		
+		
+		
+		Address address1=new Address();
+		address1.setId(11);
+		address1.setLocation("nashik");
+		address1.setLandmark("watertank");
+		address1.setPincode("415100");
+		Address address2=new Address();
+		address2.setId(12);
+		address2.setLocation("karnataka");
+		address2.setLandmark("watertank");
+		address2.setPincode("415188");
+
+		//List<address1>add1=new ArrayList<address1>();
+		
+		
+		
+		
+		Patients patient1=new Patients();
+		patient1.setId(11);
+		patient1.setAge(23);
+		patient1.setPname("mali");
+		
+		Patients patient2=new Patients();
+		patient2.setId(12);
+		patient2.setAge(24);
+		patient2.setPname("patil");
+		
+	
+		
+		
+		
+Diseases disease1=new Diseases();
+disease1.setId(11);
+disease1.setDname("corona");
+disease1.setSymtoms("mood swings");
+Diseases disease2=new Diseases();
+disease2.setId(12);
+disease2.setDname("corona");
+disease1.setSymtoms("mood swings");
+
+
+Encounters encounter1=new Encounters();
+encounter1.setId(11);
+encounter1.setPname("sujay");
+encounter1.setDate("22/5/2023");
+encounter1.setLastin("1 jan");
+encounter1.setLastout("20 jan");
+//e.setpaient(p1);
+Encounters encounter2=new Encounters();
+encounter2.setId(12);
+encounter2.setPname("abhishek");
+encounter2.setDate("22/8/2022");
+encounter2.setLastin("1 jan");
+encounter2.setLastout("20 jan");
+
+
+List<Branches>branches=new ArrayList<Branches>();
+branches.add(branch1);
+branches.add(branch2);
+hospital.setBranches(branches);
+
+branch1.setAddress(address1);
+branch2.setAddress(address2);
+
+
+
+
+//one to many
+List<Patients>patient11=new ArrayList<Patients>();
+patient11.add(patient1);
+branch1.setPatients(patient11);
+
+List<Patients>patient22=new ArrayList<Patients>();
+patient22.add(patient1);
+branch2.setPatients(patient22);
+
+//many to many
+List<Diseases>disease11=new ArrayList<Diseases>();
+disease11.add(disease1);
+disease11.add(disease2);
+patient1.setDiseases(disease11);
+
+List<Diseases>disease22=new ArrayList<Diseases>();
+disease22.add(disease1);
+disease22.add(disease2);
+patient2.setDiseases(disease22);
+
+
+//many to many
+List<Patients>patient111=new ArrayList<Patients>();
+patient111.add(patient1);
+patient111.add(patient2);
+disease1.setPatients(patient111);
+
+List<Patients>patient222=new ArrayList<Patients>();
+patient222.add(patient1);
+patient222.add(patient2);
+disease2.setPatients(patient222);
+
+
+//one to many 
+List<Encounters>encounter11=new ArrayList<Encounters>();
+encounter11.add(encounter1);
+encounter11.add(encounter2);
+patient1.setEncounters(encounter11);
+List<Encounters>encounter22=new ArrayList<Encounters>();
+encounter22.add(encounter1);
+encounter22.add(encounter2);
+patient2.setEncounters(encounter22);
+
+
+et.begin();
+
+em.persist(hospital);
+em.persist(branch1);
+em.persist(branch2);
+em.persist(address1);
+em.persist(address2);
+em.persist(patient1);
+em.persist(patient2);
+em.persist(disease1);
+em.persist(disease2);
+
+em.persist(encounter1);
+em.persist(encounter2);
+et.commit();
+
+	}
+
+}
